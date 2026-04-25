@@ -408,9 +408,9 @@ window.GAME_CONFIG = {
 };
 
 const DIFFICULTY = {
-  easy:   { duration:45, speed:0.36, goal:3 },
-  medium: { duration:45, speed:0.56, goal:5 },
-  hard:   { duration:45, speed:0.78, goal:7 }
+  easy:   { duration:45, speed:0.44, goal:3 },
+  medium: { duration:45, speed:0.64, goal:5 },
+  hard:   { duration:45, speed:0.88, goal:7 }
 };
 
 const _edState   = { difficulty:'medium', theme:'futuristic', palette:0 };
@@ -784,18 +784,20 @@ const PALETTES = {
 /* ═══════════════════════════════════════
    PRODUCT HELPERS
 ═══════════════════════════════════════ */
-let _lastIdx = -1;
+const _recentIdxs = [];
 const pickProduct = (rare = false) => {
   const prods = window.GAME_CONFIG?.products || [];
   if (rare) return prods.find(p => p.rare) || prods[prods.length-1];
   const nonRare = prods.filter(p => !p.rare);
   if (!nonRare.length) return prods[0];
-  let idx;
-  do { idx = Math.floor(Math.random() * nonRare.length); } while (idx === _lastIdx && nonRare.length > 1);
-  _lastIdx = idx;
+  let idx, tries = 0;
+  do { idx = Math.floor(Math.random() * nonRare.length); tries++; }
+  while (_recentIdxs.includes(idx) && nonRare.length > 2 && tries < 8);
+  _recentIdxs.push(idx);
+  if (_recentIdxs.length > 2) _recentIdxs.shift();
   return nonRare[idx];
 };
-const randScale = () => +(0.78 + Math.random() * 0.84).toFixed(2);
+const randScale = () => +(0.78 + Math.random() * 0.60).toFixed(2);
 
 /* ═══════════════════════════════════════
    APP
@@ -876,7 +878,7 @@ const App = () => {
   /* Init items on mount */
   useEffect(() => {
     setItems([
-      {x:8,row:0},{x:36,row:1},{x:64,row:0},{x:90,row:1},
+      {x:10,row:0},{x:50,row:1},{x:88,row:0},
     ].map((p,i) => ({
       id:Math.random(), x:p.x, row:p.row,
       type:pickProduct(), scale:randScale()*(p.row?.84:1),
@@ -900,7 +902,7 @@ const App = () => {
     setParticles([]);
     setMessages([]);
     setItems([
-      {x:8,row:0},{x:36,row:1},{x:64,row:0},{x:90,row:1},
+      {x:10,row:0},{x:50,row:1},{x:88,row:0},
     ].map((p,i) => ({
       id:Math.random(), x:p.x, row:p.row,
       type:pickProduct(), scale:randScale()*(p.row?.84:1),
@@ -971,7 +973,7 @@ const App = () => {
     else if (clawState === 'grabbing') {
       SFX.grab();
       setItems(prev => {
-        const idx = prev.findIndex(it => !it.grabbed && Math.abs(it.x - 50) < 9);
+        const idx = prev.findIndex(it => !it.grabbed && Math.abs(it.x - 50) < 14);
         if (idx !== -1) {
           const item = prev[idx]; setCaughtItem(item); gotItemRef.current = item;
           const next = [...prev]; next[idx] = {...next[idx], grabbed:true}; return next;
@@ -1039,6 +1041,7 @@ const App = () => {
       topGlowW: '180px',
       topGlowH: '60px',
       topGlowOp: 0.25,
+      ceilH: '22px',
       frameBg: `repeating-linear-gradient(168deg,#000818 0,#000818 6px,rgba(${acc},.15) 6px,rgba(${acc},.15) 7px,#001030 7px,#001030 13px,rgba(${acc2},.09) 13px,rgba(${acc2},.09) 14px,#000922 14px,#000922 20px,rgba(${acc},.11) 20px,rgba(${acc},.11) 21px,#000c28 21px,#000c28 27px)`,
       outerPat: `repeating-linear-gradient(-60deg,rgba(${acc},.14) 0,rgba(${acc},.14) 1px,transparent 1px,transparent 28px),repeating-linear-gradient(60deg,rgba(${acc2},.11) 0,rgba(${acc2},.11) 1px,transparent 1px,transparent 28px),repeating-linear-gradient(0deg,rgba(${acc},.06) 0,rgba(${acc},.06) 1px,transparent 1px,transparent 56px)`,
       colLines: `repeating-linear-gradient(90deg,transparent 0,transparent 11px,rgba(${acc2},.10) 11px,rgba(${acc2},.10) 12px,transparent 12px,transparent 47px,rgba(${acc},.40) 47px,rgba(${acc},.40) 49px),repeating-linear-gradient(180deg,transparent 0,transparent 11px,rgba(${acc},.07) 11px,rgba(${acc},.07) 12px,transparent 12px,transparent 47px,rgba(${acc2},.20) 47px,rgba(${acc2},.20) 49px)`,
@@ -1190,25 +1193,19 @@ const App = () => {
       <div className="absolute inset-0 pointer-events-none"
         style={{background:T.outerVig}} />
 
+
       {/* ── FULL-SCREEN OVERLAYS ── */}
       {(gameState === 'idle' || gameState === 'ended') && (
         <div className="absolute inset-0 z-50 flex flex-col items-center justify-center p-6 sm:p-10"
           style={{background:T.outerBg}}>
 
-          {/* bg pattern */}
-          <div className="absolute inset-0 opacity-10 pointer-events-none" style={{background:T.outerPat}}/>
-
-          {/* center glow */}
+          {/* center glow — theme accent */}
           <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
             <div style={{
               width:'70vw', height:'70vw', maxWidth:'500px', maxHeight:'500px',
               borderRadius:'50%',
-              background: gameState==='ended' && score>=goal
-                ? `radial-gradient(ellipse,rgba(${T.accentR},.28) 0%,transparent 70%)`
-                : gameState==='ended'
-                  ? 'radial-gradient(ellipse,rgba(239,68,68,.18) 0%,transparent 70%)'
-                  : `radial-gradient(ellipse,rgba(${T.accentR},.18) 0%,transparent 70%)`,
-              filter:'blur(40px)',
+              background:`radial-gradient(ellipse,rgba(${T.accentR},.22) 0%,transparent 70%)`,
+              filter:'blur(50px)',
             }}/>
           </div>
 
@@ -1258,21 +1255,21 @@ const App = () => {
 
             {gameState === 'ended' && score < goal && (<>
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center border"
-                style={{background:'rgba(239,68,68,.12)', borderColor:'rgba(239,68,68,.3)', boxShadow:'0 0 32px rgba(239,68,68,.2)'}}>
-                <ClockIcon className="w-7 h-7 sm:w-8 sm:h-8" style={{color:'#f87171'}}/>
+                style={{background:T.hudBg, borderColor:T.hudB, boxShadow:`0 0 32px rgba(${T.accentR},.25)`}}>
+                <ClockIcon className="w-7 h-7 sm:w-8 sm:h-8" style={{color:T.hudTxt}}/>
               </div>
               <h1 className="font-orb font-bold tracking-tight leading-none"
-                style={{fontSize:'clamp(2rem,7vw,2.8rem)', color:'#fca5a5'}}>
+                style={{fontSize:'clamp(2rem,7vw,2.8rem)', color:T.hudTxt}}>
                 {texts.failMsg || 'נסיון נכשל'}
               </h1>
-              <div className="w-20 h-px" style={{background:'linear-gradient(90deg,transparent,rgba(239,68,68,.6),transparent)'}}/>
+              <div className="w-20 h-px" style={{background:`linear-gradient(90deg,transparent,rgba(${T.accentR},.7),transparent)`}}/>
               <p className="text-sm sm:text-base leading-relaxed" style={{color:'rgba(255,255,255,.55)'}}>
-                אספתם <span className="font-bold text-red-400">{score} פריטים</span>
+                אספתם <span className="font-bold" style={{color:T.hudTxt}}>{score} פריטים</span>
                 <br/>צריך לפחות {goal} כדי לנצח
               </p>
               <button onClick={startGame}
-                className="flex items-center gap-2 bg-red-500 hover:bg-red-400 text-white font-bold text-base sm:text-lg py-3 px-10 sm:px-14 rounded-full transition-all active:scale-95 mt-2"
-                style={{boxShadow:'0 0 28px rgba(239,68,68,.4)', cursor:'pointer'}}>
+                className="flex items-center gap-2 font-bold text-base sm:text-lg py-3 px-10 sm:px-14 rounded-full transition-all active:scale-95 mt-2"
+                style={{background:T.btnOn, color:'#0f172a', boxShadow:`0 0 28px rgba(${T.accentR},.45)`, cursor:'pointer'}}>
                 <PlayIcon className="w-5 h-5"/> נסה שוב
               </button>
             </>)}
@@ -1438,7 +1435,7 @@ const App = () => {
                         <div className="absolute bottom-0 rounded-full"
                           style={{width:'54px',height:'10px',background:'rgba(0,0,0,.85)',filter:'blur(4px)',transform:'scaleY(.28)'}}/>
                         <div className="z-10 relative" style={{filter:`drop-shadow(0 0 12px ${item.type.glow})`, transition:'filter .2s'}}>
-                          <img src={item.type.img} style={{width:`${Math.round(72*item.scale)}px`, height:'auto', display:'block', borderRadius:'8px', border:`2px solid ${T.itemBord}`, boxShadow:`inset 0 1px 0 rgba(255,255,255,.10), 0 2px 8px rgba(0,0,0,.3), 0 0 10px rgba(${acc},.18)`, padding:'3px', background:T.itemBg}}/>
+                          <img src={item.type.img} style={{width:`${Math.round(68*item.scale)}px`, height:'auto', display:'block', borderRadius:'8px', border:`2px solid ${T.itemBord}`, boxShadow:`inset 0 1px 0 rgba(255,255,255,.10), 0 2px 8px rgba(0,0,0,.3), 0 0 10px rgba(${acc},.18)`, padding:'3px', background:T.itemBg}}/>
                         </div>
                         {nearClaw && clawState==='descending' && (
                           <div className="absolute inset-0 rounded-full animate-pulse pointer-events-none"
@@ -1484,7 +1481,7 @@ const App = () => {
 
         {/* CONTROL PANEL */}
         <div className="flex-none px-1 pb-1">
-          <div className="rounded-xl border flex justify-center sm:justify-between items-center px-4 sm:px-8 py-3 sm:py-4 relative overflow-hidden"
+          <div className="rounded-xl border flex justify-center sm:justify-between items-center px-4 sm:px-8 py-2 sm:py-3 relative overflow-hidden"
             style={{background:T.panelBg, borderColor:T.panelB}}>
             <div className="hidden sm:flex gap-2 opacity-35">
               {[...Array(5)].map((_,i)=>(
@@ -1508,7 +1505,6 @@ const App = () => {
                   style={{width:sz?'26px':'38px',height:sz?'26px':'38px',
                     filter:btnReady?'drop-shadow(0 2px 4px rgba(0,0,0,.6))':'none'}}/>
               </button>
-              <span className="font-orb text-[8px] uppercase tracking-widest" style={{color:T.btnLbl}}>שחרר</span>
             </div>
             <div className="hidden sm:flex gap-2 opacity-35">
               {[...Array(5)].map((_,i)=>(
