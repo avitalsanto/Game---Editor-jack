@@ -161,6 +161,7 @@
       background: #000;
       font-family: 'Assistant', sans-serif;
     }
+    .wlc-logo { width: clamp(216px,55vmin,408px); max-height: 48dvh; height: auto; object-fit: contain; display: block; margin: 0 auto 14px; pointer-events: none; user-select: none; -webkit-user-drag: none; }
     .wlc-title {
       font-size: clamp(32px,6vmin,52px); font-weight: 800;
       color: #e8e4f8; letter-spacing: -.5px; margin-bottom: 10px;
@@ -266,6 +267,7 @@
 
 <!-- ══ WELCOME SCREEN ══ -->
 <div id="welcome-screen">
+  <img class="wlc-logo" src="https://static.wixstatic.com/media/b4f4e1_7ea1cba4dba84d18acc4aba2a4f83b78~mv2.png" alt="שלוף מתנה" draggable="false" />
   <h1 class="wlc-title">שלוף מתנה</h1>
   <p class="wlc-sub">אספו לפחות 3 פריטים לפני שהזמן נגמר!</p>
   <div class="wlc-btns">
@@ -401,16 +403,16 @@ window.GAME_CONFIG = {
     { id:'p1', img:'https://static.wixstatic.com/media/b4f4e1_de6f1efef8454794bb1df7825d4340ad~mv2.jpg', glow:'rgba(236,72,153,.7)',  label:'פרס',    rare:false },
     { id:'p2', img:'https://static.wixstatic.com/media/b4f4e1_9a462a60f2af4498be3a96589671e625~mv2.jpg', glow:'rgba(168,85,247,.7)',  label:'פרס',    rare:false },
     { id:'p3', img:'https://static.wixstatic.com/media/b4f4e1_9038fb92fc3c4dbea9813991d3a77720~mv2.jpg', glow:'rgba(52,211,153,.7)',  label:'פרס',    rare:false },
-    { id:'p4', img:'https://static.wixstatic.com/media/b4f4e1_23416313e0ec4e25adfac93fc08772b2~mv2.jpg', glow:'rgba(96,165,250,.7)',  label:'פרס',    rare:false },
+    { id:'p4', img:'https://static.wixstatic.com/media/b4f4e1_fbcf19517b5a4aeb843a1a9dda3a24c2~mv2.jpg', glow:'rgba(96,165,250,.7)',  label:'פרס',    rare:false },
     { id:'p6', img:'https://static.wixstatic.com/media/b4f4e1_0b74fb3cbd4841c198cf2028a7bd9e44~mv2.jpg', glow:'rgba(52,211,153,.7)',  label:'פרס',    rare:false },
     { id:'p5', img:'https://static.wixstatic.com/media/b4f4e1_9e0de0f262da4d1ab2eeb4cf98a38921~mv2.jpg', glow:'rgba(253,224,71,.9)',  label:"ג'קפוט", rare:true  },
   ]
 };
 
 const DIFFICULTY = {
-  easy:   { duration:38, speed:0.36, goal:4 },
-  medium: { duration:35, speed:0.52, goal:6 },
-  hard:   { duration:32, speed:0.72, goal:8 }
+  easy:   { duration:38, speed:0.36, goal:5 },
+  medium: { duration:35, speed:0.52, goal:7 },
+  hard:   { duration:32, speed:0.72, goal:10 }
 };
 
 const _edState   = { difficulty:'medium', theme:'robot', palette:3 };
@@ -784,18 +786,14 @@ const PALETTES = {
 /* ═══════════════════════════════════════
    PRODUCT HELPERS
 ═══════════════════════════════════════ */
-const _recentIdxs = [];
-const pickProduct = (rare = false) => {
+let _seqIdx = 0;
+const pickProduct = () => {
   const prods = window.GAME_CONFIG?.products || [];
-  if (rare) return prods.find(p => p.rare) || prods[prods.length-1];
   const nonRare = prods.filter(p => !p.rare);
   if (!nonRare.length) return prods[0];
-  let idx, tries = 0;
-  do { idx = Math.floor(Math.random() * nonRare.length); tries++; }
-  while (_recentIdxs.includes(idx) && nonRare.length > 2 && tries < 8);
-  _recentIdxs.push(idx);
-  if (_recentIdxs.length > 2) _recentIdxs.shift();
-  return nonRare[idx];
+  const item = nonRare[_seqIdx % nonRare.length];
+  _seqIdx++;
+  return item;
 };
 const randScale = () => +(0.90 + Math.random() * 0.70).toFixed(2);
 
@@ -950,7 +948,7 @@ const App = () => {
     const spd = window.GAME_CONFIG?.speed || 0.42;
     setItems(prev => prev.map(item => {
       let x = item.x - spd, grabbed = item.grabbed, type = item.type, scale = item.scale;
-      if (x < -22) { x = 108 + Math.random()*35; grabbed = false; type = pickProduct(Math.random() > .96); scale = randScale()*(item.row?.84:1); }
+      if (x < -22) { x = 108 + Math.random()*35; grabbed = false; type = pickProduct(); scale = randScale()*(item.row?.84:1); }
       return { ...item, x, grabbed, type, scale };
     }));
     rafRef.current = requestAnimationFrame(update);
