@@ -389,8 +389,8 @@ function buildPaletteRow(theme, selectedIdx) {
 window.GAME_CONFIG = {
   duration: 45,
   speed: 0.56,
-  theme: 'futuristic',
-  palette: 0,
+  theme: 'robot',
+  palette: 3,
   texts: {
     startTitle: 'שלוף מתנה',
     startDesc:  'יש לכם 45 שניות לאסוף פריטים כדי לנצח!',
@@ -408,12 +408,12 @@ window.GAME_CONFIG = {
 };
 
 const DIFFICULTY = {
-  easy:   { duration:45, speed:0.36, goal:3 },
-  medium: { duration:45, speed:0.52, goal:5 },
-  hard:   { duration:45, speed:0.72, goal:7 }
+  easy:   { duration:38, speed:0.36, goal:4 },
+  medium: { duration:35, speed:0.52, goal:6 },
+  hard:   { duration:32, speed:0.72, goal:8 }
 };
 
-const _edState   = { difficulty:'medium', theme:'futuristic', palette:0 };
+const _edState   = { difficulty:'medium', theme:'robot', palette:3 };
 const _edImages  = {};
 const _edDeleted = new Set();
 let   _origItems = null;
@@ -797,7 +797,7 @@ const pickProduct = (rare = false) => {
   if (_recentIdxs.length > 2) _recentIdxs.shift();
   return nonRare[idx];
 };
-const randScale = () => +(0.78 + Math.random() * 0.60).toFixed(2);
+const randScale = () => +(0.90 + Math.random() * 0.70).toFixed(2);
 
 /* ═══════════════════════════════════════
    APP
@@ -950,7 +950,7 @@ const App = () => {
     const spd = window.GAME_CONFIG?.speed || 0.42;
     setItems(prev => prev.map(item => {
       let x = item.x - spd, grabbed = item.grabbed, type = item.type, scale = item.scale;
-      if (x < -22) { x = 118 + Math.random()*55; grabbed = false; type = pickProduct(Math.random() > .96); scale = randScale()*(item.row?.84:1); }
+      if (x < -22) { x = 108 + Math.random()*35; grabbed = false; type = pickProduct(Math.random() > .96); scale = randScale()*(item.row?.84:1); }
       return { ...item, x, grabbed, type, scale };
     }));
     rafRef.current = requestAnimationFrame(update);
@@ -973,7 +973,7 @@ const App = () => {
     else if (clawState === 'grabbing') {
       SFX.grab();
       setItems(prev => {
-        const idx = prev.findIndex(it => !it.grabbed && Math.abs(it.x - 50) < 14);
+        const idx = prev.findIndex(it => !it.grabbed && Math.abs(it.x - 50) < 10);
         if (idx !== -1) {
           const item = prev[idx]; setCaughtItem(item); gotItemRef.current = item;
           const next = [...prev]; next[idx] = {...next[idx], grabbed:true}; return next;
