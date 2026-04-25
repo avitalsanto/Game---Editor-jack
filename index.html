@@ -398,19 +398,19 @@ window.GAME_CONFIG = {
     failMsg: 'נסיון נכשל'
   },
   products: [
-    { id:'p1', img:'https://static.wixstatic.com/media/b4f4e1_4bca205de05844548a674ccac0b2b923~mv2.jpg', glow:'rgba(236,72,153,.7)',  label:'פרס',    rare:false },
-    { id:'p2', img:'https://static.wixstatic.com/media/b4f4e1_e88091526714445eb08d17c3eb1cd816~mv2.jpg', glow:'rgba(168,85,247,.7)',  label:'פרס',    rare:false },
-    { id:'p3', img:'https://static.wixstatic.com/media/b4f4e1_4c85b50a0b1942e3af182f257df85340~mv2.jpg', glow:'rgba(52,211,153,.7)',  label:'פרס',    rare:false },
-    { id:'p4', img:'https://static.wixstatic.com/media/b4f4e1_67ea71f241364e8ebb6612ebfd85d44d~mv2.jpg', glow:'rgba(96,165,250,.7)',  label:'פרס',    rare:false },
-    { id:'p6', img:'https://static.wixstatic.com/media/b4f4e1_bb9d4294f3fc4e4ca166076c43a7b0a1~mv2.jpg', glow:'rgba(52,211,153,.7)',  label:'פרס',    rare:false },
-    { id:'p5', img:'https://static.wixstatic.com/media/b4f4e1_02539c0d83b54c65b0763ddf1d0f12a7~mv2.jpg', glow:'rgba(253,224,71,.9)',  label:"ג'קפוט", rare:true  },
+    { id:'p1', img:'https://static.wixstatic.com/media/b4f4e1_de6f1efef8454794bb1df7825d4340ad~mv2.jpg', glow:'rgba(236,72,153,.7)',  label:'פרס',    rare:false },
+    { id:'p2', img:'https://static.wixstatic.com/media/b4f4e1_9a462a60f2af4498be3a96589671e625~mv2.jpg', glow:'rgba(168,85,247,.7)',  label:'פרס',    rare:false },
+    { id:'p3', img:'https://static.wixstatic.com/media/b4f4e1_9038fb92fc3c4dbea9813991d3a77720~mv2.jpg', glow:'rgba(52,211,153,.7)',  label:'פרס',    rare:false },
+    { id:'p4', img:'https://static.wixstatic.com/media/b4f4e1_23416313e0ec4e25adfac93fc08772b2~mv2.jpg', glow:'rgba(96,165,250,.7)',  label:'פרס',    rare:false },
+    { id:'p6', img:'https://static.wixstatic.com/media/b4f4e1_0b74fb3cbd4841c198cf2028a7bd9e44~mv2.jpg', glow:'rgba(52,211,153,.7)',  label:'פרס',    rare:false },
+    { id:'p5', img:'https://static.wixstatic.com/media/b4f4e1_9e0de0f262da4d1ab2eeb4cf98a38921~mv2.jpg', glow:'rgba(253,224,71,.9)',  label:"ג'קפוט", rare:true  },
   ]
 };
 
 const DIFFICULTY = {
-  easy:   { duration:45, speed:0.44, goal:3 },
-  medium: { duration:45, speed:0.64, goal:5 },
-  hard:   { duration:45, speed:0.88, goal:7 }
+  easy:   { duration:45, speed:0.36, goal:3 },
+  medium: { duration:45, speed:0.52, goal:5 },
+  hard:   { duration:45, speed:0.72, goal:7 }
 };
 
 const _edState   = { difficulty:'medium', theme:'futuristic', palette:0 };
@@ -950,7 +950,7 @@ const App = () => {
     const spd = window.GAME_CONFIG?.speed || 0.42;
     setItems(prev => prev.map(item => {
       let x = item.x - spd, grabbed = item.grabbed, type = item.type, scale = item.scale;
-      if (x < -22) { x = 112 + Math.random()*8; grabbed = false; type = pickProduct(Math.random() > .96); scale = randScale()*(item.row?.84:1); }
+      if (x < -22) { x = 118 + Math.random()*55; grabbed = false; type = pickProduct(Math.random() > .96); scale = randScale()*(item.row?.84:1); }
       return { ...item, x, grabbed, type, scale };
     }));
     rafRef.current = requestAnimationFrame(update);
@@ -1319,7 +1319,7 @@ const App = () => {
         {/* GAME VIEWPORT */}
         <div className="flex-1 min-h-0 flex flex-col relative px-1">
           <div ref={gameAreaRef}
-            className="flex-1 relative rounded-xl border-2 overflow-hidden scanlines"
+            className="flex-1 relative rounded-xl border-2 overflow-hidden"
             style={{background:T.viewBg, borderColor:T.viewBord}}>
 
             {/* OVERLAYS moved to outermost div */}
@@ -1435,7 +1435,7 @@ const App = () => {
                         <div className="absolute bottom-0 rounded-full"
                           style={{width:'54px',height:'10px',background:'rgba(0,0,0,.85)',filter:'blur(4px)',transform:'scaleY(.28)'}}/>
                         <div className="z-10 relative" style={{filter:`drop-shadow(0 0 12px ${item.type.glow})`, transition:'filter .2s'}}>
-                          <img src={item.type.img} style={{width:`${Math.round(68*item.scale)}px`, height:'auto', display:'block', borderRadius:'8px', border:`2px solid ${T.itemBord}`, boxShadow:`inset 0 1px 0 rgba(255,255,255,.10), 0 2px 8px rgba(0,0,0,.3), 0 0 10px rgba(${acc},.18)`, padding:'3px', background:T.itemBg}}/>
+                          <img src={item.type.img} style={{width:`${Math.round((sz?68:90)*item.scale)}px`, height:'auto', display:'block', borderRadius:'8px', border:`2px solid ${T.itemBord}`, boxShadow:`inset 0 1px 0 rgba(255,255,255,.10), 0 2px 8px rgba(0,0,0,.3), 0 0 10px rgba(${acc},.18)`, padding:'3px', background:T.itemBg}}/>
                         </div>
                         {nearClaw && clawState==='descending' && (
                           <div className="absolute inset-0 rounded-full animate-pulse pointer-events-none"
