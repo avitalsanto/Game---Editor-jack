@@ -8,7 +8,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <title>מכונת הלוכד</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Assistant:wght@400;700&family=Noto+Sans+Hebrew:wght@300;400;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -21,7 +21,7 @@
     html { height: 100%; }
     #root { height: 100dvh; display: none; }
     .font-orb { font-family: 'Orbitron', monospace; }
-    .font-heb { font-family: 'Assistant', sans-serif; }
+    .font-heb { font-family: 'Noto Sans Hebrew', sans-serif; }
 
     /* ═══ GAME CSS ═══ */
     @keyframes machine-breathe {
@@ -159,7 +159,7 @@
       justify-content: center; align-items: center; text-align: center;
       padding: clamp(24px,6vmin,48px);
       background: #000;
-      font-family: 'Assistant', sans-serif;
+      font-family: 'Noto Sans Hebrew', sans-serif;
     }
     .wlc-logo { width: clamp(216px,55vmin,408px); max-height: 48dvh; height: auto; object-fit: contain; display: block; margin: 0 auto 14px; pointer-events: none; user-select: none; -webkit-user-drag: none; }
     .wlc-title {
@@ -178,7 +178,7 @@
     .wlc-btn {
       padding: 16px 24px; font-size: clamp(15px,1.8vmin,17px);
       border: none; border-radius: 14px; cursor: pointer;
-      font-weight: 700; font-family: 'Assistant', sans-serif;
+      font-weight: 700; font-family: 'Noto Sans Hebrew', sans-serif;
       transition: transform .15s, box-shadow .2s;
       min-height: 54px; width: 100%;
       display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -189,7 +189,7 @@
     .wlc-btn-primary { background: #7c3aed; color: #fff; box-shadow: 0 4px 20px rgba(124,58,237,.25); }
     .wlc-btn-primary:hover { background: #8b5cf6; box-shadow: 0 6px 28px rgba(124,58,237,.4); transform: scale(1.02); }
 
-    #editor-screen { min-height:100dvh; padding:0 clamp(16px,5vw,64px) clamp(32px,5vmin,56px); background:#0b0b15; max-width:1400px; margin:0 auto; padding-top:68px; color:#e0e0f0; font-family:'Assistant',sans-serif; }
+    #editor-screen { min-height:100dvh; padding:0 clamp(16px,5vw,64px) clamp(32px,5vmin,56px); background:#0b0b15; max-width:1400px; margin:0 auto; padding-top:68px; color:#e0e0f0; font-family:'Noto Sans Hebrew',sans-serif; }
     .editor-topbar { position:fixed; top:0; left:0; right:0; z-index:500; display:flex; align-items:center; justify-content:space-between; padding:12px clamp(16px,5vw,64px); background:rgba(11,11,21,.94); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,.04); }
     .editor-topbar h2 { font-size:clamp(15px,2.2vmin,19px); color:#e8e4f8; font-weight:700; margin:0; letter-spacing:.2px; }
     .editor-topbar-actions { display:flex; gap:10px; }
@@ -206,7 +206,7 @@
       .editor-body .sec-share     { grid-column:1/3; grid-row:5; }
     }
     .theme-btn-wrap { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-    .theme-card { flex:1; padding:14px 8px 12px; font-size:clamp(13px,1.5vmin,15px); border:2px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03); color:#7a7e94; border-radius:14px; cursor:pointer; font-family:'Assistant',sans-serif; font-weight:600; transition:all .22s; min-height:72px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; }
+    .theme-card { flex:1; padding:14px 8px 12px; font-size:clamp(13px,1.5vmin,15px); border:2px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03); color:#7a7e94; border-radius:14px; cursor:pointer; font-family:'Noto Sans Hebrew',sans-serif; font-weight:600; transition:all .22s; min-height:72px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; }
     .theme-card:hover { background:rgba(255,255,255,.07); }
     .theme-card .tc-icon { font-size:22px; line-height:1; }
     .theme-card .tc-lbl { font-size:clamp(12px,1.4vmin,14px); }
@@ -218,7 +218,7 @@
     .palette-dot { width:100%; height:38px; border-radius:10px; border:2px solid transparent; transition:all .22s; }
     .palette-swatch:hover .palette-dot { transform:translateY(-2px); border-color:rgba(255,255,255,.28); }
     .palette-swatch.active .palette-dot { border-color:rgba(255,255,255,.70); transform:translateY(-2px); }
-    .palette-name { font-size:10px; color:#5a5e78; font-family:'Assistant',sans-serif; font-weight:600; transition:color .2s; letter-spacing:.3px; }
+    .palette-name { font-size:10px; color:#5a5e78; font-family:'Noto Sans Hebrew',sans-serif; font-weight:600; transition:color .2s; letter-spacing:.3px; }
     .palette-swatch.active .palette-name { color:#b0aac8; }
     .editor-section { margin-bottom:clamp(20px,3.5vmin,32px); background:rgba(255,255,255,.02); border:1px solid rgba(255,255,255,.04); border-radius:16px; padding:clamp(20px,3vmin,30px); }
     .editor-section h3 { font-size:clamp(11px,1.3vmin,12px); color:#6e7090; margin-bottom:clamp(14px,2.5vmin,22px); font-weight:700; letter-spacing:1.2px; text-transform:uppercase; }
@@ -230,7 +230,7 @@
     .asset-thumb { position:relative; width:100%; aspect-ratio:1; border-radius:12px; overflow:hidden; margin-bottom:8px; border:1px solid rgba(255,255,255,.05); background:#12121e; }
     .asset-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
     .asset-overlay { position:absolute; bottom:0; left:0; right:0; display:flex; align-items:center; justify-content:center; gap:5px; padding:8px 6px; background:rgba(0,0,0,.62); backdrop-filter:blur(4px); }
-    .upload-btn,.del-btn { display:flex; align-items:center; justify-content:center; padding:0 8px; font-size:clamp(10px,1.2vmin,12px); border-radius:7px; cursor:pointer; font-family:'Assistant',sans-serif; height:28px; line-height:1; box-sizing:border-box; transition:all .2s; font-weight:600; flex:1; white-space:nowrap; }
+    .upload-btn,.del-btn { display:flex; align-items:center; justify-content:center; padding:0 8px; font-size:clamp(10px,1.2vmin,12px); border-radius:7px; cursor:pointer; font-family:'Noto Sans Hebrew',sans-serif; height:28px; line-height:1; box-sizing:border-box; transition:all .2s; font-weight:600; flex:1; white-space:nowrap; }
     .upload-btn { border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.1); color:#e8e8f0; }
     .upload-btn:hover { background:rgba(255,255,255,.25); color:#fff; }
     .del-btn { border:1px solid rgba(255,80,80,.3); background:rgba(255,60,60,.12); color:#ff8888; flex:0 0 36px; padding:0; font-size:18px; }
@@ -241,24 +241,24 @@
     .asset-placeholder .plus-icon { font-size:clamp(28px,4vmin,40px); line-height:1; color:#555570; transition:color .2s; }
     .asset-placeholder:hover .plus-icon { color:#8a8ea4; }
     .diff-group { display:flex; gap:10px; }
-    .diff-btn { flex:1; padding:12px 8px; font-size:clamp(13px,1.5vmin,15px); border:2px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03); color:#7a7e94; border-radius:12px; cursor:pointer; font-family:'Assistant',sans-serif; font-weight:600; transition:all .2s; min-height:48px; display:flex; align-items:center; justify-content:center; }
+    .diff-btn { flex:1; padding:12px 8px; font-size:clamp(13px,1.5vmin,15px); border:2px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03); color:#7a7e94; border-radius:12px; cursor:pointer; font-family:'Noto Sans Hebrew',sans-serif; font-weight:600; transition:all .2s; min-height:48px; display:flex; align-items:center; justify-content:center; }
     .diff-btn:hover { background:rgba(255,255,255,.07); }
     .diff-btn.active { border-color:#7c3aed; background:rgba(124,58,237,.1); color:#c4b5fd; }
     .field-group { margin-bottom:20px; }
     .field-group:last-child { margin-bottom:0; }
     .field-label { display:block; font-size:clamp(12px,1.5vmin,14px); color:#9a9eb4; margin-bottom:10px; font-weight:500; letter-spacing:.2px; }
-    .text-field { width:100%; padding:14px 18px; font-size:16px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:12px; color:#d0d4e4; font-family:'Assistant',sans-serif; min-height:48px; resize:vertical; transition:border-color .2s,box-shadow .2s; line-height:1.5; }
+    .text-field { width:100%; padding:14px 18px; font-size:16px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:12px; color:#d0d4e4; font-family:'Noto Sans Hebrew',sans-serif; min-height:48px; resize:vertical; transition:border-color .2s,box-shadow .2s; line-height:1.5; }
     .text-field:focus { outline:none; border-color:#7c3aed; box-shadow:0 0 0 3px rgba(124,58,237,.1); background:rgba(255,255,255,.045); }
-    .e-btn { padding:14px 16px; font-size:clamp(14px,1.6vmin,16px); border:none; border-radius:12px; cursor:pointer; font-weight:700; font-family:'Assistant',sans-serif; min-height:50px; transition:transform .15s,box-shadow .2s; display:flex; align-items:center; justify-content:center; gap:6px; }
+    .e-btn { padding:14px 16px; font-size:clamp(14px,1.6vmin,16px); border:none; border-radius:12px; cursor:pointer; font-weight:700; font-family:'Noto Sans Hebrew',sans-serif; min-height:50px; transition:transform .15s,box-shadow .2s; display:flex; align-items:center; justify-content:center; gap:6px; }
     .e-btn:active { transform:scale(.96); }
     .e-btn-start { background:#7c3aed; color:#fff; box-shadow:0 4px 16px rgba(124,58,237,.25); }
     .e-btn-start:hover { background:#8b5cf6; transform:scale(1.02); }
     .e-btn-back { background:rgba(255,255,255,.05); color:#7a7e94; border:1px solid rgba(255,255,255,.06); }
-    .e-btn-share-full { width:100%; background:rgba(124,58,237,.1); color:#a78bfa; border:1px solid rgba(124,58,237,.18); padding:14px 16px; font-size:clamp(14px,1.6vmin,16px); border-radius:12px; cursor:pointer; font-weight:700; font-family:'Assistant',sans-serif; min-height:50px; transition:all .2s; display:flex; align-items:center; justify-content:center; gap:10px; }
+    .e-btn-share-full { width:100%; background:rgba(124,58,237,.1); color:#a78bfa; border:1px solid rgba(124,58,237,.18); padding:14px 16px; font-size:clamp(14px,1.6vmin,16px); border-radius:12px; cursor:pointer; font-weight:700; font-family:'Noto Sans Hebrew',sans-serif; min-height:50px; transition:all .2s; display:flex; align-items:center; justify-content:center; gap:10px; }
     .e-btn-share-full:hover { background:rgba(124,58,237,.2); border-color:rgba(124,58,237,.35); transform:scale(1.01); }
-    .share-toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:#1e1e2e; color:#e8e4f8; padding:12px 24px; border-radius:10px; font-size:14px; z-index:9999; opacity:0; transition:all .3s ease; pointer-events:none; border:1px solid rgba(124,58,237,.2); box-shadow:0 4px 20px rgba(0,0,0,.4); font-family:'Assistant',sans-serif; }
+    .share-toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:#1e1e2e; color:#e8e4f8; padding:12px 24px; border-radius:10px; font-size:14px; z-index:9999; opacity:0; transition:all .3s ease; pointer-events:none; border:1px solid rgba(124,58,237,.2); box-shadow:0 4px 20px rgba(0,0,0,.4); font-family:'Noto Sans Hebrew',sans-serif; }
     .share-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-    .back-to-editor { position:fixed; top:max(calc(env(safe-area-inset-top,0px) + 8px),16px); left:clamp(8px,2vw,16px); z-index:150; padding:7px 14px; font-size:clamp(11px,1.5vmin,13px); border:none; border-radius:9px; background:rgba(0,0,0,.5); color:rgba(255,255,255,.65); cursor:pointer; font-family:'Assistant',sans-serif; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); min-height:34px; transition:background .2s,color .2s; display:none; border:1px solid rgba(255,255,255,.08); }
+    .back-to-editor { position:fixed; top:max(calc(env(safe-area-inset-top,0px) + 8px),16px); left:clamp(8px,2vw,16px); z-index:150; padding:7px 14px; font-size:clamp(11px,1.5vmin,13px); border:none; border-radius:9px; background:rgba(0,0,0,.5); color:rgba(255,255,255,.65); cursor:pointer; font-family:'Noto Sans Hebrew',sans-serif; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); min-height:34px; transition:background .2s,color .2s; display:none; border:1px solid rgba(255,255,255,.08); }
     .back-to-editor:hover { background:rgba(0,0,0,.75); color:#fff; }
     .back-to-editor.visible { display:flex; align-items:center; gap:5px; }
   </style>
@@ -269,9 +269,9 @@
 <div id="welcome-screen">
   <img class="wlc-logo" src="https://static.wixstatic.com/media/b4f4e1_7ea1cba4dba84d18acc4aba2a4f83b78~mv2.png" alt="שלוף מתנה" draggable="false" />
   <h1 class="wlc-title">שלוף מתנה</h1>
-  <p class="wlc-sub">אספו לפחות 3 פריטים לפני שהזמן נגמר!</p>
+  <p class="wlc-sub">תפסו מספיק פריטים שעוברים לפני שהזמן נגמר!</p>
   <div class="wlc-btns">
-    <button class="wlc-btn wlc-btn-primary" id="wlc-edit-btn">✏️&nbsp; ערוך משחק</button>
+    <button class="wlc-btn wlc-btn-primary" id="wlc-edit-btn">✏&nbsp; ערוך משחק</button>
     <button class="wlc-btn wlc-btn-secondary" id="wlc-play-btn">▶&nbsp; שחק עכשיו</button>
   </div>
 </div>
@@ -303,7 +303,7 @@
       </div>
       <div class="field-group">
         <label class="field-label">תיאור מסך פתיחה</label>
-        <textarea class="text-field" id="ed-start-desc" rows="3" placeholder="תיאור">יש לכם 45 שניות לאסוף לפחות 3 פריטים כדי לנצח!</textarea>
+        <textarea class="text-field" id="ed-start-desc" rows="3" placeholder="תיאור">תפסו לפחות 50% מהפריטים שעוברים כדי לנצח!</textarea>
       </div>
       <div class="field-group">
         <label class="field-label">הודעת ניצחון</label>
@@ -352,7 +352,7 @@
 
 <!-- ══ GAME ══ -->
 <div id="root"></div>
-<button id="back-to-editor-btn" class="back-to-editor">✏️ עריכה</button>
+<button id="back-to-editor-btn" class="back-to-editor">← עריכה</button>
 <div class="share-toast" id="share-toast">הקישור הועתק! 🔗</div>
 
 <!-- ══ SCREEN & EDITOR LOGIC ══ -->
@@ -410,9 +410,9 @@ window.GAME_CONFIG = {
 };
 
 const DIFFICULTY = {
-  easy:   { duration:38, speed:0.36, goal:5 },
-  medium: { duration:35, speed:0.52, goal:7 },
-  hard:   { duration:32, speed:0.72, goal:10 }
+  easy:   { duration:38, speed:0.36, catchPct:0.28 },
+  medium: { duration:35, speed:0.52, catchPct:0.42 },
+  hard:   { duration:32, speed:0.72, catchPct:0.58 }
 };
 
 const _edState   = { difficulty:'medium', theme:'robot', palette:3 };
@@ -438,10 +438,10 @@ function applyEditorToConfig() {
   _ensureOrig();
   const v = id => { const el=document.getElementById(id); return el?el.value.trim():''; };
   const diff = DIFFICULTY[_edState.difficulty] || DIFFICULTY.medium;
-  window.GAME_CONFIG.duration = diff.duration;
-  window.GAME_CONFIG.speed    = diff.speed;
-  window.GAME_CONFIG.goal     = diff.goal;
-  window.GAME_CONFIG.theme    = _edState.theme || 'robot';
+  window.GAME_CONFIG.duration  = diff.duration;
+  window.GAME_CONFIG.speed     = diff.speed;
+  window.GAME_CONFIG.catchPct  = diff.catchPct;
+  window.GAME_CONFIG.theme     = _edState.theme || 'robot';
   window.GAME_CONFIG.palette  = _edState.palette ?? 0;
   window.GAME_CONFIG.texts = {
     startTitle: v('ed-start-title') || 'שלוף מתנה',
@@ -575,6 +575,7 @@ function loadFromHash() {
 }
 
 /* ── Wire up buttons ── */
+const _initHash = window.location.hash;
 document.addEventListener('DOMContentLoaded', () => {
   showScreen('welcome');
   buildEditorImages();
@@ -583,7 +584,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('wlc-play-btn').addEventListener('click', startFromHTML);
   document.getElementById('wlc-edit-btn').addEventListener('click', () => showScreen('editor'));
-  document.getElementById('ed-back-btn').addEventListener('click', () => showScreen('welcome'));
+  document.getElementById('ed-back-btn').addEventListener('click', () => {
+    if (window.parent !== window) { window.parent.postMessage('closeGame', '*'); return; }
+    showScreen('welcome');
+  });
   document.getElementById('ed-start-btn').addEventListener('click', startFromHTML);
   document.getElementById('ed-share-btn').addEventListener('click', shareGame);
   document.getElementById('back-to-editor-btn').addEventListener('click', () => {
@@ -605,6 +609,10 @@ document.addEventListener('DOMContentLoaded', () => {
       buildPaletteRow(btn.dataset.theme, 0);
     });
   });
+
+  // Handle entry from parent website carousel (#mode=play / #mode=edit)
+  if (_initHash === '#mode=play') startFromHTML();
+  else if (_initHash === '#mode=edit') showScreen('editor');
 });
 </script>
 
@@ -802,7 +810,9 @@ const randScale = () => +(0.90 + Math.random() * 0.70).toFixed(2);
 ═══════════════════════════════════════ */
 const App = () => {
   const [score,      setScore]      = useState(0);
-  const [goal,       setGoal]       = useState(3);
+  const [catchPct,   setCatchPct]   = useState(0.45);
+  const [passed,     setPassed]     = useState(0);
+  const [won,        setWon]        = useState(false);
   const [items,      setItems]      = useState([]);
   const [clawPos,    setClawPos]    = useState(0);
   const [clawState,  setClawState]  = useState('idle');
@@ -821,6 +831,7 @@ const App = () => {
   const gameAreaRef = useRef(null);
   const gotItemRef  = useRef(null);
   const scoreRef    = useRef(0);
+  const passedRef   = useRef(0);
   const startGameRef = useRef(null);
 
   const L = useMemo(() => {
@@ -861,6 +872,7 @@ const App = () => {
     if (gameState !== 'playing' || timeLeft <= 0) return;
     const t = setTimeout(() => {
       setTimeLeft(p => { if (p <= 10) SFX.tick(); return p - 1; });
+      setPassed(passedRef.current);
     }, 1000);
     return () => clearTimeout(t);
   }, [gameState, timeLeft]);
@@ -869,7 +881,12 @@ const App = () => {
     if (gameState === 'playing' && timeLeft === 0) {
       setGameState('ended');
       setGameActive(false);
-      setTimeout(() => scoreRef.current >= (window.GAME_CONFIG?.goal||3) ? SFX.win() : SFX.lose(), 150);
+      const total = scoreRef.current + passedRef.current;
+      const rate = total > 0 ? scoreRef.current / total : 0;
+      const required = window.GAME_CONFIG?.catchPct || 0.45;
+      const didWin = rate >= required;
+      setWon(didWin);
+      setTimeout(() => didWin ? SFX.win() : SFX.lose(), 150);
     }
   }, [timeLeft, gameState]);
 
@@ -879,8 +896,8 @@ const App = () => {
       {x:10,row:0},{x:50,row:1},{x:88,row:0},
     ].map((p,i) => ({
       id:Math.random(), x:p.x, row:p.row,
-      type:pickProduct(), scale:randScale()*(p.row?.84:1),
-      grabbed:false, bobDelay:i*0.28,
+      type:pickProduct(), scale:randScale()*(p.row ? 0.756 : 1),
+      grabbed:false, counted:false, bobDelay:i*0.28,
     })));
   }, []);
 
@@ -890,7 +907,9 @@ const App = () => {
     SFX.click();
     const cfg = window.GAME_CONFIG || {};
     setScore(0); scoreRef.current = 0;
-    setGoal(cfg.goal || 3);
+    setPassed(0); passedRef.current = 0;
+    setCatchPct(cfg.catchPct || 0.45);
+    setWon(false);
     setTimeLeft(cfg.duration || 45);
     setGameState('playing');
     setGameActive(true);
@@ -903,8 +922,8 @@ const App = () => {
       {x:10,row:0},{x:50,row:1},{x:88,row:0},
     ].map((p,i) => ({
       id:Math.random(), x:p.x, row:p.row,
-      type:pickProduct(), scale:randScale()*(p.row?.84:1),
-      grabbed:false, bobDelay:i*0.28,
+      type:pickProduct(), scale:randScale()*(p.row ? 0.756 : 1),
+      grabbed:false, counted:false, bobDelay:i*0.28,
     })));
   };
 
@@ -946,11 +965,18 @@ const App = () => {
   const update = useCallback(() => {
     if (!gameActive) return;
     const spd = window.GAME_CONFIG?.speed || 0.42;
-    setItems(prev => prev.map(item => {
-      let x = item.x - spd, grabbed = item.grabbed, type = item.type, scale = item.scale;
-      if (x < -22) { x = 108 + Math.random()*35; grabbed = false; type = pickProduct(); scale = randScale()*(item.row?.84:1); }
-      return { ...item, x, grabbed, type, scale };
-    }));
+    setItems(prev => {
+      let newMissed = 0;
+      const next = prev.map(item => {
+        let { x, grabbed, type, scale, counted } = item;
+        x -= spd;
+        if (!grabbed && !counted && x < 40) { counted = true; newMissed++; }
+        if (x < -22) { x = 108 + Math.random()*35; grabbed = false; type = pickProduct(); scale = randScale()*(item.row ? 0.756 : 1); counted = false; }
+        return { ...item, x, grabbed, type, scale, counted };
+      });
+      if (newMissed > 0) passedRef.current += newMissed;
+      return next;
+    });
     rafRef.current = requestAnimationFrame(update);
   }, [gameActive]);
 
@@ -1194,81 +1220,65 @@ const App = () => {
 
       {/* ── FULL-SCREEN OVERLAYS ── */}
       {(gameState === 'idle' || gameState === 'ended') && (
-        <div className="absolute inset-0 z-50 flex flex-col items-center justify-center p-6 sm:p-10"
-          style={{background:T.outerBg}}>
+        <div style={{
+          position:'absolute', inset:0, zIndex:50,
+          display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
+          background:T.outerBg, textAlign:'center',
+          padding:'20px', paddingTop:'calc(20px + env(safe-area-inset-top,0px))',
+          paddingBottom:'calc(20px + env(safe-area-inset-bottom,0px))',
+        }}>
 
-          {/* center glow — theme accent */}
-          <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-            <div style={{
-              width:'70vw', height:'70vw', maxWidth:'500px', maxHeight:'500px',
-              borderRadius:'50%',
-              background:`radial-gradient(ellipse,rgba(${T.accentR},.22) 0%,transparent 70%)`,
-              filter:'blur(50px)',
-            }}/>
+          {/* center glow */}
+          <div style={{position:'absolute',inset:0,pointerEvents:'none',display:'flex',alignItems:'center',justifyContent:'center'}}>
+            <div style={{width:'70vw',height:'70vw',maxWidth:'500px',maxHeight:'500px',borderRadius:'50%',background:`radial-gradient(ellipse,rgba(${T.accentR},.22) 0%,transparent 70%)`,filter:'blur(50px)'}}/>
           </div>
 
-          {/* card */}
-          <div className="relative z-10 flex flex-col items-center gap-5 sm:gap-7 w-full max-w-sm text-center">
+          <div style={{position:'relative',zIndex:1,display:'flex',flexDirection:'column',alignItems:'center',width:'100%',maxWidth:'360px'}}>
 
             {gameState === 'idle' && (<>
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center border"
-                style={{background:T.hudBg, borderColor:T.hudB, boxShadow:`0 0 32px rgba(${T.accentR},.25)`}}>
-                <TrophyIcon className="w-7 h-7 sm:w-8 sm:h-8" style={{color:T.hudTxt}}/>
-              </div>
-              <h1 className="font-orb font-bold tracking-tight leading-none"
-                style={{fontSize:'clamp(2rem,7vw,2.8rem)', color:T.hudTxt}}>
+              <h1 className="font-heb" style={{fontSize:'clamp(32px,6vmin,52px)',fontWeight:800,margin:'0 0 12px',letterSpacing:'-0.5px',lineHeight:1.05,color:T.hudTxt}}>
                 {texts.startTitle || 'שלוף מתנה'}
               </h1>
-              <div className="w-20 h-px" style={{background:`linear-gradient(90deg,transparent,rgba(${T.accentR},.7),transparent)`}}/>
-              <p className="text-sm sm:text-base leading-relaxed" style={{color:'rgba(255,255,255,.55)'}}>
+              <p className="font-heb" style={{fontSize:'clamp(14px,1.8vmin,17px)',fontWeight:500,color:'rgba(255,255,255,.5)',margin:0,lineHeight:1.6,maxWidth:'36ch'}}>
                 {texts.startDesc || 'יש לכם 45 שניות לאסוף פריטים כדי לנצח!'}
               </p>
-              <button onClick={startGame}
-                className="font-bold text-base sm:text-lg py-3 px-10 sm:px-14 rounded-full transition-all active:scale-95 mt-2"
-                style={{background:T.btnOn, color:'#0f172a', boxShadow:`0 0 28px rgba(${T.accentR},.45)`, cursor:'pointer', letterSpacing:'0.02em'}}>
+              <button onClick={startGame} className="font-heb"
+                style={{fontWeight:700,fontSize:'clamp(15px,2vmin,18px)',padding:'14px 40px',border:'none',borderRadius:'14px',cursor:'pointer',marginTop:'32px',background:T.btnOn,color:'#0f172a',boxShadow:`0 8px 32px rgba(${T.accentR},.45)`,transition:'transform .22s',WebkitTapHighlightColor:'transparent'}}
+                onMouseEnter={e=>e.currentTarget.style.transform='scale(1.04)'}
+                onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'}>
                 התחל לתפוס
               </button>
             </>)}
 
-            {gameState === 'ended' && score >= goal && (<>
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center border"
-                style={{background:T.hudBg, borderColor:T.hudB, boxShadow:`0 0 32px rgba(${T.accentR},.3)`}}>
-                <TrophyIcon className="w-7 h-7 sm:w-8 sm:h-8" style={{color:T.hudTxt}}/>
-              </div>
-              <h1 className="font-orb font-bold tracking-tight leading-none"
-                style={{fontSize:'clamp(2rem,7vw,2.8rem)', color:T.hudTxt}}>
+            {gameState === 'ended' && won && (<>
+              <h1 className="font-heb" style={{fontSize:'clamp(32px,6vmin,52px)',fontWeight:800,margin:'0 0 12px',letterSpacing:'-0.5px',lineHeight:1.05,color:T.hudTxt}}>
                 {texts.winMsg || 'ניצחתם!'}
               </h1>
-              <div className="w-20 h-px" style={{background:`linear-gradient(90deg,transparent,rgba(${T.accentR},.7),transparent)`}}/>
-              <p className="text-sm sm:text-base leading-relaxed" style={{color:'rgba(255,255,255,.55)'}}>
-                אספתם <span className="font-bold" style={{color:T.hudTxt}}>{score} פריטים</span>
+              <p className="font-heb" style={{fontSize:'clamp(14px,1.8vmin,17px)',fontWeight:500,color:'rgba(255,255,255,.5)',margin:0,lineHeight:1.6}}>
+                תפסתם <span style={{fontWeight:700,color:T.hudTxt}}>{Math.round(score/Math.max(1,score+passed)*100)}%</span> מהפריטים
                 <br/>כל הכבוד!
               </p>
-              <button onClick={startGame}
-                className="flex items-center gap-2 font-bold text-base sm:text-lg py-3 px-10 sm:px-14 rounded-full transition-all active:scale-95 mt-2"
-                style={{background:T.btnOn, color:'#0f172a', boxShadow:`0 0 28px rgba(${T.accentR},.45)`, cursor:'pointer'}}>
-                <PlayIcon className="w-5 h-5"/> שחק שוב
+              <button onClick={startGame} className="font-heb"
+                style={{fontWeight:700,fontSize:'clamp(15px,2vmin,18px)',padding:'14px 40px',border:'none',borderRadius:'14px',cursor:'pointer',marginTop:'32px',background:T.btnOn,color:'#0f172a',boxShadow:`0 8px 32px rgba(${T.accentR},.45)`,transition:'transform .22s',WebkitTapHighlightColor:'transparent'}}
+                onMouseEnter={e=>e.currentTarget.style.transform='scale(1.04)'}
+                onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'}>
+                שחק שוב
               </button>
             </>)}
 
-            {gameState === 'ended' && score < goal && (<>
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center border"
-                style={{background:T.hudBg, borderColor:T.hudB, boxShadow:`0 0 32px rgba(${T.accentR},.25)`}}>
-                <ClockIcon className="w-7 h-7 sm:w-8 sm:h-8" style={{color:T.hudTxt}}/>
-              </div>
-              <h1 className="font-orb font-bold tracking-tight leading-none"
-                style={{fontSize:'clamp(2rem,7vw,2.8rem)', color:T.hudTxt}}>
+            {gameState === 'ended' && !won && (<>
+              <h1 className="font-heb" style={{fontSize:'clamp(32px,6vmin,52px)',fontWeight:800,margin:'0 0 12px',letterSpacing:'-0.5px',lineHeight:1.05,color:T.hudTxt}}>
                 {texts.failMsg || 'נסיון נכשל'}
               </h1>
-              <div className="w-20 h-px" style={{background:`linear-gradient(90deg,transparent,rgba(${T.accentR},.7),transparent)`}}/>
-              <p className="text-sm sm:text-base leading-relaxed" style={{color:'rgba(255,255,255,.55)'}}>
-                אספתם <span className="font-bold" style={{color:T.hudTxt}}>{score} פריטים</span>
-                <br/>צריך לפחות {goal} כדי לנצח
+              <p className="font-heb" style={{fontSize:'clamp(14px,1.8vmin,17px)',fontWeight:500,color:'rgba(255,255,255,.5)',margin:0,lineHeight:1.6}}>
+                תפסתם <span style={{fontWeight:700,color:'#f87171'}}>{Math.round(score/Math.max(1,score+passed)*100)}%</span> מהפריטים
+                <br/>היה צריך לפחות {Math.round(catchPct*100)}%
               </p>
-              <button onClick={startGame}
-                className="flex items-center gap-2 font-bold text-base sm:text-lg py-3 px-10 sm:px-14 rounded-full transition-all active:scale-95 mt-2"
-                style={{background:T.btnOn, color:'#0f172a', boxShadow:`0 0 28px rgba(${T.accentR},.45)`, cursor:'pointer'}}>
-                <PlayIcon className="w-5 h-5"/> נסה שוב
+              <button onClick={startGame} className="font-heb"
+                style={{fontWeight:700,fontSize:'clamp(15px,2vmin,18px)',padding:'14px 40px',border:'none',borderRadius:'14px',cursor:'pointer',marginTop:'32px',background:T.btnOn,color:'#0f172a',boxShadow:`0 8px 32px rgba(${T.accentR},.45)`,transition:'transform .22s',WebkitTapHighlightColor:'transparent'}}
+                onMouseEnter={e=>e.currentTarget.style.transform='scale(1.04)'}
+                onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'}>
+                נסה שוב
               </button>
             </>)}
 
@@ -1294,14 +1304,24 @@ const App = () => {
                 style={{color:T.hudTxt}}>{score}</p>
             </div>
           </div>
-          <div className="flex items-center gap-1.5">
-            {Array.from({length:goal},(_,i) => (
-              <div key={i} className={`rounded-full border-2 transition-all duration-300 ${score>i?'dot-fill':''}`}
-                style={{width:sz?'10px':'13px', height:sz?'10px':'13px',
-                  background:score>i?T.sA:T.dotI, borderColor:score>i?T.sAB:T.dotIB,
-                  boxShadow:score>i?`0 0 8px ${T.sGlow}`:'none'}} />
-            ))}
-            <span className="text-[9px] font-orb ml-0.5" style={{color:T.hudSub}}>/{goal}</span>
+          <div className="flex flex-col items-center gap-1">
+            {(() => {
+              const total = score + passed;
+              const rate  = total > 0 ? Math.round(score / total * 100) : 0;
+              const req   = Math.round(catchPct * 100);
+              const ok    = rate >= req;
+              const col   = ok ? T.sA : '#f87171';
+              return (<>
+                <div className="flex items-baseline gap-0.5">
+                  <span className="font-orb font-bold text-sm leading-none" style={{color:col}}>{rate}%</span>
+                  <span className="text-[9px] font-orb" style={{color:T.hudSub}}>/{req}%</span>
+                </div>
+                <div className="rounded-full overflow-hidden" style={{width:sz?'52px':'64px', height:'4px', background:T.dotI}}>
+                  <div className="h-full rounded-full transition-all duration-500"
+                    style={{width:`${Math.min(100,rate)}%`, background:col, boxShadow:`0 0 5px ${col}`}}/>
+                </div>
+              </>);
+            })()}
           </div>
           <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border transition-all ${isDanger?T.timerDanger:''}`}
             style={isDanger?{}:{background:T.timerBg, borderColor:T.timerB}}>
