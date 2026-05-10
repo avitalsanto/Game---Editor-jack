@@ -303,7 +303,7 @@
       </div>
       <div class="field-group">
         <label class="field-label">תיאור מסך פתיחה</label>
-        <textarea class="text-field" id="ed-start-desc" rows="3" placeholder="תיאור">תפסו לפחות 50% מהפריטים שעוברים כדי לנצח!</textarea>
+        <textarea class="text-field" id="ed-start-desc" rows="3" placeholder="תיאור">תפסו מספיק פריטים שעוברים כדי לנצח!</textarea>
       </div>
       <div class="field-group">
         <label class="field-label">הודעת ניצחון</label>
@@ -395,7 +395,7 @@ window.GAME_CONFIG = {
   palette: 3,
   texts: {
     startTitle: 'שלוף מתנה',
-    startDesc:  'יש לכם 45 שניות לאסוף פריטים כדי לנצח!',
+    startDesc:  'תפסו מספיק פריטים שעוברים כדי לנצח!',
     winMsg:  'ניצחתם!',
     failMsg: 'נסיון נכשל'
   },
@@ -410,9 +410,9 @@ window.GAME_CONFIG = {
 };
 
 const DIFFICULTY = {
-  easy:   { duration:38, speed:0.36, catchPct:0.28 },
-  medium: { duration:35, speed:0.52, catchPct:0.42 },
-  hard:   { duration:32, speed:0.72, catchPct:0.58 }
+  easy:   { duration:38, speed:0.36, goal:7  },
+  medium: { duration:35, speed:0.52, goal:10 },
+  hard:   { duration:32, speed:0.72, goal:15 }
 };
 
 const _edState   = { difficulty:'medium', theme:'robot', palette:3 };
@@ -438,9 +438,9 @@ function applyEditorToConfig() {
   _ensureOrig();
   const v = id => { const el=document.getElementById(id); return el?el.value.trim():''; };
   const diff = DIFFICULTY[_edState.difficulty] || DIFFICULTY.medium;
-  window.GAME_CONFIG.duration  = diff.duration;
-  window.GAME_CONFIG.speed     = diff.speed;
-  window.GAME_CONFIG.catchPct  = diff.catchPct;
+  window.GAME_CONFIG.duration = diff.duration;
+  window.GAME_CONFIG.speed    = diff.speed;
+  window.GAME_CONFIG.goal     = diff.goal;
   window.GAME_CONFIG.theme     = _edState.theme || 'robot';
   window.GAME_CONFIG.palette  = _edState.palette ?? 0;
   window.GAME_CONFIG.texts = {
@@ -810,9 +810,7 @@ const randScale = () => +(0.90 + Math.random() * 0.70).toFixed(2);
 ═══════════════════════════════════════ */
 const App = () => {
   const [score,      setScore]      = useState(0);
-  const [catchPct,   setCatchPct]   = useState(0.45);
-  const [passed,     setPassed]     = useState(0);
-  const [won,        setWon]        = useState(false);
+  const [goal,       setGoal]       = useState(7);
   const [items,      setItems]      = useState([]);
   const [clawPos,    setClawPos]    = useState(0);
   const [clawState,  setClawState]  = useState('idle');
@@ -831,7 +829,6 @@ const App = () => {
   const gameAreaRef = useRef(null);
   const gotItemRef  = useRef(null);
   const scoreRef    = useRef(0);
-  const passedRef   = useRef(0);
   const startGameRef = useRef(null);
 
   const L = useMemo(() => {
@@ -872,7 +869,6 @@ const App = () => {
     if (gameState !== 'playing' || timeLeft <= 0) return;
     const t = setTimeout(() => {
       setTimeLeft(p => { if (p <= 10) SFX.tick(); return p - 1; });
-      setPassed(passedRef.current);
     }, 1000);
     return () => clearTimeout(t);
   }, [gameState, timeLeft]);
@@ -881,12 +877,7 @@ const App = () => {
     if (gameState === 'playing' && timeLeft === 0) {
       setGameState('ended');
       setGameActive(false);
-      const total = scoreRef.current + passedRef.current;
-      const rate = total > 0 ? scoreRef.current / total : 0;
-      const required = window.GAME_CONFIG?.catchPct || 0.45;
-      const didWin = rate >= required;
-      setWon(didWin);
-      setTimeout(() => didWin ? SFX.win() : SFX.lose(), 150);
+      setTimeout(() => scoreRef.current >= (window.GAME_CONFIG?.goal || 7) ? SFX.win() : SFX.lose(), 150);
     }
   }, [timeLeft, gameState]);
 
@@ -897,7 +888,7 @@ const App = () => {
     ].map((p,i) => ({
       id:Math.random(), x:p.x, row:p.row,
       type:pickProduct(), scale:randScale()*(p.row ? 0.756 : 1),
-      grabbed:false, counted:false, bobDelay:i*0.28,
+      grabbed:false, bobDelay:i*0.28,
     })));
   }, []);
 
@@ -907,10 +898,8 @@ const App = () => {
     SFX.click();
     const cfg = window.GAME_CONFIG || {};
     setScore(0); scoreRef.current = 0;
-    setPassed(0); passedRef.current = 0;
-    setCatchPct(cfg.catchPct || 0.45);
-    setWon(false);
-    setTimeLeft(cfg.duration || 45);
+    setGoal(cfg.goal || 7);
+    setTimeLeft(cfg.duration || 38);
     setGameState('playing');
     setGameActive(true);
     setClawState('idle');
@@ -923,7 +912,7 @@ const App = () => {
     ].map((p,i) => ({
       id:Math.random(), x:p.x, row:p.row,
       type:pickProduct(), scale:randScale()*(p.row ? 0.756 : 1),
-      grabbed:false, counted:false, bobDelay:i*0.28,
+      grabbed:false, bobDelay:i*0.28,
     })));
   };
 
@@ -965,18 +954,11 @@ const App = () => {
   const update = useCallback(() => {
     if (!gameActive) return;
     const spd = window.GAME_CONFIG?.speed || 0.42;
-    setItems(prev => {
-      let newMissed = 0;
-      const next = prev.map(item => {
-        let { x, grabbed, type, scale, counted } = item;
-        x -= spd;
-        if (!grabbed && !counted && x < 40) { counted = true; newMissed++; }
-        if (x < -22) { x = 108 + Math.random()*35; grabbed = false; type = pickProduct(); scale = randScale()*(item.row ? 0.756 : 1); counted = false; }
-        return { ...item, x, grabbed, type, scale, counted };
-      });
-      if (newMissed > 0) passedRef.current += newMissed;
-      return next;
-    });
+    setItems(prev => prev.map(item => {
+      let x = item.x - spd, grabbed = item.grabbed, type = item.type, scale = item.scale;
+      if (x < -22) { x = 108 + Math.random()*35; grabbed = false; type = pickProduct(); scale = randScale()*(item.row ? 0.756 : 1); }
+      return { ...item, x, grabbed, type, scale };
+    }));
     rafRef.current = requestAnimationFrame(update);
   }, [gameActive]);
 
@@ -1250,12 +1232,12 @@ const App = () => {
               </button>
             </>)}
 
-            {gameState === 'ended' && won && (<>
+            {gameState === 'ended' && score >= goal && (<>
               <h1 className="font-heb" style={{fontSize:'clamp(32px,6vmin,52px)',fontWeight:800,margin:'0 0 12px',letterSpacing:'-0.5px',lineHeight:1.05,color:T.hudTxt}}>
                 {texts.winMsg || 'ניצחתם!'}
               </h1>
               <p className="font-heb" style={{fontSize:'clamp(14px,1.8vmin,17px)',fontWeight:500,color:'rgba(255,255,255,.5)',margin:0,lineHeight:1.6}}>
-                תפסתם <span style={{fontWeight:700,color:T.hudTxt}}>{Math.round(score/Math.max(1,score+passed)*100)}%</span> מהפריטים
+                אספתם <span style={{fontWeight:700,color:T.hudTxt}}>{score} פריטים</span>
                 <br/>כל הכבוד!
               </p>
               <button onClick={startGame} className="font-heb"
@@ -1266,13 +1248,13 @@ const App = () => {
               </button>
             </>)}
 
-            {gameState === 'ended' && !won && (<>
+            {gameState === 'ended' && score < goal && (<>
               <h1 className="font-heb" style={{fontSize:'clamp(32px,6vmin,52px)',fontWeight:800,margin:'0 0 12px',letterSpacing:'-0.5px',lineHeight:1.05,color:T.hudTxt}}>
                 {texts.failMsg || 'נסיון נכשל'}
               </h1>
               <p className="font-heb" style={{fontSize:'clamp(14px,1.8vmin,17px)',fontWeight:500,color:'rgba(255,255,255,.5)',margin:0,lineHeight:1.6}}>
-                תפסתם <span style={{fontWeight:700,color:'#f87171'}}>{Math.round(score/Math.max(1,score+passed)*100)}%</span> מהפריטים
-                <br/>היה צריך לפחות {Math.round(catchPct*100)}%
+                אספתם <span style={{fontWeight:700,color:T.hudTxt}}>{score} פריטים</span>
+                <br/>צריך לפחות {goal} כדי לנצח
               </p>
               <button onClick={startGame} className="font-heb"
                 style={{fontWeight:700,fontSize:'clamp(15px,2vmin,18px)',padding:'14px 40px',border:'none',borderRadius:'14px',cursor:'pointer',marginTop:'32px',background:T.btnOn,color:'#0f172a',boxShadow:`0 8px 32px rgba(${T.accentR},.45)`,transition:'transform .22s',WebkitTapHighlightColor:'transparent'}}
@@ -1305,23 +1287,15 @@ const App = () => {
             </div>
           </div>
           <div className="flex flex-col items-center gap-1">
-            {(() => {
-              const total = score + passed;
-              const rate  = total > 0 ? Math.round(score / total * 100) : 0;
-              const req   = Math.round(catchPct * 100);
-              const ok    = rate >= req;
-              const col   = ok ? T.sA : '#f87171';
-              return (<>
-                <div className="flex items-baseline gap-0.5">
-                  <span className="font-orb font-bold text-sm leading-none" style={{color:col}}>{rate}%</span>
-                  <span className="text-[9px] font-orb" style={{color:T.hudSub}}>/{req}%</span>
-                </div>
-                <div className="rounded-full overflow-hidden" style={{width:sz?'52px':'64px', height:'4px', background:T.dotI}}>
-                  <div className="h-full rounded-full transition-all duration-500"
-                    style={{width:`${Math.min(100,rate)}%`, background:col, boxShadow:`0 0 5px ${col}`}}/>
-                </div>
-              </>);
-            })()}
+            <div className="flex items-baseline gap-0.5">
+              <span className={`font-orb font-bold text-sm leading-none ${scoreKey>0?'score-pop':''}`} key={scoreKey}
+                style={{color: score >= goal ? T.sA : T.hudTxt}}>{score}</span>
+              <span className="text-[9px] font-orb" style={{color:T.hudSub}}>/{goal}</span>
+            </div>
+            <div className="rounded-full overflow-hidden" style={{width:sz?'52px':'64px', height:'4px', background:T.dotI}}>
+              <div className="h-full rounded-full transition-all duration-500"
+                style={{width:`${Math.min(100, score/goal*100)}%`, background:T.sA, boxShadow:`0 0 5px ${T.sGlow}`}}/>
+            </div>
           </div>
           <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border transition-all ${isDanger?T.timerDanger:''}`}
             style={isDanger?{}:{background:T.timerBg, borderColor:T.timerB}}>
